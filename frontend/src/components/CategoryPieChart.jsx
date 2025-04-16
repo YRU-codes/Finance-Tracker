@@ -54,7 +54,7 @@ const CategoryPieChart = ({budgets ,transactions}) => {
         </div>
 
         <div className="pie-container">
-          <h4 style={{ textAlign: "center" }}>Actual Spending</h4>
+          <h4 style={{ textAlign: "center" }}>📊 Category-wise Spending</h4>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie

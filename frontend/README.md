@@ -1,12 +1,15 @@
-# React + Vite
+#Finance Tracker
+Simple App which build using react and nodejs with fully responsive UI, simple and user friendly UI to navigate from adding to managing all.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+to set up project
+Backend
+steps
+    1. cd .\backend\
+    2. Add packages - npm install
+    3. To start the server - node server.js
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Frontend
+steps
+    1. cd .\frontend\
+    2. Add packages - npm install
+    3. To start project - npm run dev

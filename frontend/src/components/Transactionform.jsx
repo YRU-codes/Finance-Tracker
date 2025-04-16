@@ -3,6 +3,7 @@ import './Transactionform.css'
 import { useState, useEffect } from "react";
 
 const CATEGORY = ["Food", "Transport", "Shopping", "Utilities", "Health", "Entertainment", "Rent", "Other"];
+const getTodayDate = () => new Date().toISOString().slice(0, 10);
 
 const Transactionform = ({ onSave, editingTransaction }) => {
   const [form, setForm] = useState({
@@ -15,7 +16,10 @@ const Transactionform = ({ onSave, editingTransaction }) => {
 
   useEffect(() => {
     if (editingTransaction) {
-      setForm(editingTransaction);
+      setForm({
+        ...editingTransaction,
+      date: editingTransaction.date.slice(0, 10),
+      });
     }
   }, [editingTransaction]);
 
@@ -34,7 +38,7 @@ const Transactionform = ({ onSave, editingTransaction }) => {
         const selectedDate = new Date(form.date);
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        if (selectedDate > today) {
+        if (selectedDate > today + 1) {
           newErrors.date = "Date cannot be in the future";
         }
       }
@@ -75,7 +79,7 @@ const Transactionform = ({ onSave, editingTransaction }) => {
       </div>
       <div>
         <label>Date</label>
-        <input type="date" value={form.date} name="date" onChange={handleForm}/>
+        <input type="date" value={form.date} name="date" onChange={handleForm} max={getTodayDate()}/>
         {errors.date && <span className="error">{errors.date}</span>}
       </div>
       <div>

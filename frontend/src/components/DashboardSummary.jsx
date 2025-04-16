@@ -44,7 +44,7 @@ const DashboardSummary = ({transactions}) => {
         <h4>Recent Transactions</h4>
         <ul>
           {recentTransactions.map((txn) => (
-            <li key={txn.id}>
+            <li key={txn._id}>
               {txn.date} - ₹ {txn.amount} ({txn.category})
             </li>
           ))}

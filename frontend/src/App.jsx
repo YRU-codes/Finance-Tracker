@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css'
 import Transactionform from './components/Transactionform';
 import TransactionList from './components/TransactionList';
@@ -6,6 +6,7 @@ import CategoryPieChart from './components/CategoryPieChart';
 import DashboardSummary from './components/DashboardSummary';
 import BudgetManager from './components/BudgetManager';
 import Model from './components/Model';
+import axios from 'axios';
 function App() {
   const [transactions, setTransactions] = useState([]);
   const [editingTransaction, setEditingTransaction] = useState(null);
@@ -16,24 +17,33 @@ function App() {
     Travel: 1500,
   });
 
+  //fetch transactions from DB
+  const fetchTransactions = async () =>{
+    const resp = await axios.get('http://localhost:5000/api/transactions');
+    setTransactions(resp.data);
+  }
+
+  useEffect(()=>{
+    fetchTransactions();
+  },[])
+
   //Add and Update transaction
-  const handleSave = (transaction) => {
-    if (transaction.id) {
+  const handleSave = async (transaction) => {
+    if (transaction._id) {
       // Edit mode
-      console.log(transaction.id);
-      console.log(transactions);
-      setTransactions((prev) =>
-        prev.map((t) => (t.id === transaction.id ? transaction : t))
-      );
+      console.log(transaction);
+      const resp = await axios.put(`http://localhost:5000/api/transactions/${transaction._id}`, transaction);
+      if(resp.data){
+        fetchTransactions();
+      }
     } else {
       // Add mode
-      const newTransaction = {
-        ...transaction,
-        id: crypto.randomUUID(),
-      };
-      setTransactions((prev) => [newTransaction, ...prev]);
+      const resp = await axios.post('http://localhost:5000/api/transactions', transaction);
+      if(resp.data){
+        fetchTransactions();
+      }
     }
-    setEditingTransaction(null); 
+    setEditingTransaction(null);
   };
 
   // Edit transaction
@@ -42,9 +52,13 @@ function App() {
   };
 
   // Delete transaction
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete this transaction?")) {
-      setTransactions((prev) => prev.filter((t) => t.id !== id));
+      const resp = await axios.delete(`http://localhost:5000/api/transactions/${id}`);
+      console.log(resp);
+      if(resp.status === 200){
+        fetchTransactions();
+      }
     }
   };
   
