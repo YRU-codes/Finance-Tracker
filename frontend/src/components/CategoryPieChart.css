@@ -1,0 +1,11 @@
+.pie-row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+.pie-container {
+    flex: 1 1 300px;
+    min-width: 300px;
+}

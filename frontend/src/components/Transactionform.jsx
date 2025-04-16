@@ -67,6 +67,7 @@ const Transactionform = ({ onSave, editingTransaction }) => {
       onSubmit={handleSubmit}
       className="transaction-form"
     >
+      <h2>💸 Personal Finance Tracker</h2>
       <div>
         <label>Amount</label>
         <input type="number" value={form.amount} name="amount" onChange={handleForm}/>

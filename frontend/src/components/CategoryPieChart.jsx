@@ -1,12 +1,13 @@
-import React from 'react'
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import React from 'react';
+import './CategoryPieChart.css';
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const COLORS = [
   "#8884d8", "#82ca9d", "#ffc658", "#ff7f50", "#00c49f",
   "#ffbb28", "#0088fe", "#d0ed57", "#a4de6c", "#ff8042"
 ];
 
-const CategoryPieChart = ({transactions}) => {
+const CategoryPieChart = ({budgets ,transactions}) => {
     if(transactions.length === 0 ){
         return;
     }
@@ -21,24 +22,59 @@ const CategoryPieChart = ({transactions}) => {
         value: total
       }));
 
+      const budgetData = Object.entries(budgets).map(([category, amount]) => ({
+        name: category,
+        value: amount,
+      }));
+
   return (
-    <div >
-      <h3>📊 Category-wise Expenses</h3>
-      <PieChart width={320} height={300}>
-        <Pie
-          data={data}
-          dataKey="value"
-          nameKey="name"
-          outerRadius={100}
-          label
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-        <Legend layout="horizontal" />
-      </PieChart>
+    <div className="pie-chart-section">
+      <h3 style={{ textAlign: "center", marginBottom: "1rem" }}>Budget vs Actual Spending</h3>
+      <div className="pie-row">
+        <div className="pie-container">
+          <h4 style={{ textAlign: "center" }}>Budget</h4>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                data={budgetData}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={80}
+                fill="#8884d8"
+                label
+              >
+                {budgetData.map((entry, index) => (
+                  <Cell key={`budget-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="pie-container">
+          <h4 style={{ textAlign: "center" }}>Actual Spending</h4>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                data={data}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={80}
+                fill="#82ca9d"
+                label
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`actual-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </div>
   )
 }
